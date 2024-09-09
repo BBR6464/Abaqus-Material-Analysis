@@ -1,0 +1,393 @@
+# Save by Mohd Babar Malik on 2024_09_09-09.56.44; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=150.0)
+mdb.models['Model-1'].sketches['__profile__'].CircleByCenterPerimeter(center=(
+    0.0, 0.0), point1=(75.0, 0.0))
+mdb.models['Model-1'].Part(dimensionality=THREE_D, name='Compression-Cylinder', 
+    type=DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Compression-Cylinder'].BaseSolidExtrude(depth=
+    375.0, sketch=mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].parts['Compression-Cylinder'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[0], MIDDLE), 
+    point2=mdb.models['Model-1'].parts['Compression-Cylinder'].vertices[0], 
+    point3=mdb.models['Model-1'].parts['Compression-Cylinder'].vertices[1])
+mdb.models['Model-1'].parts['Compression-Cylinder'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].cells.getSequenceFromMask(
+    ('[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[4], MIDDLE), 
+    point2=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[6], MIDDLE), 
+    point3=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[5], MIDDLE))
+mdb.models['Model-1'].parts['Compression-Cylinder'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].cells.getSequenceFromMask(
+    ('[#f ]', ), ), point1=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[8], MIDDLE), 
+    point2=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[2], MIDDLE), 
+    point3=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].InterestingPoint(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].edges[6], MIDDLE))
+# Save by Mohd Babar Malik on 2024_09_09-09.58.52; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].Material(name='Concrete')
+mdb.models['Model-1'].materials['Concrete'].Density(table=((2.4e-09, ), ))
+mdb.models['Model-1'].materials['Concrete'].Elastic(table=((20111.0, 0.2), ))
+mdb.models['Model-1'].materials['Concrete'].ConcreteDamagedPlasticity(table=((
+    40.0, 0.1, 1.16, 0.667, 0.0), ))
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.ConcreteCompressionHardening(
+    table=((36.4, 0.00017203), (38.4, 0.000262874), (40.1, 0.000364617), (40.9, 
+    0.000481495), (41.4, 0.000651055), (41.0, 0.00082255), (39.8, 0.001088387), 
+    (37.9, 0.001347439), (35.4, 0.001696475), (33.6, 0.001953347), (31.3, 
+    0.002293664), (28.7, 0.002710886), (26.2, 0.003152331), (23.4, 
+    0.003573913), (21.5, 0.003903331), (19.8, 0.004158024), (18.0, 
+    0.004401695), (17.2, 0.004562045), (16.4, 0.004810444), (15.5, 
+    0.005025779), (14.7, 0.005238934), (14.0, 0.005313537), (13.1, 
+    0.005689467), (11.9, 0.006148964), (10.4, 0.006885567), (9.5, 0.007538725), 
+    (8.6, 0.008123696), (7.0, 0.008809673), (6.2, 0.009601507), (5.5, 
+    0.010230565), (5.0, 0.010842062), (4.6, 0.011515206), (4.2, 0.012267559), (
+    3.7, 0.013143082), (3.3, 0.014423487), (2.9, 0.015600462), (2.7, 
+    0.016412281), (2.1, 0.017567212)))
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.ConcreteTensionStiffening(
+    table=((4.14, 0.0), (3.38, 0.000166158), (2.59, 0.000392643), (2.22, 
+    0.000504734), (1.86, 0.000616825), (1.25, 0.000937379), (0.83, 0.00115114), 
+    (0.57, 0.005159815)))
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.ConcreteCompressionDamage(
+    table=((0.0, 0.00017203), (0.0, 0.000262874), (0.0, 0.000364617), (0.0, 
+    0.000481495), (0.0, 0.000651055), (0.01, 0.00082255), (0.04, 0.001088387), 
+    (0.08, 0.001347439), (0.15, 0.001696475), (0.19, 0.001953347), (0.24, 
+    0.002293664), (0.31, 0.002710886), (0.37, 0.003152331), (0.43, 
+    0.003573913), (0.48, 0.003903331), (0.52, 0.004158024), (0.56, 
+    0.004401695), (0.59, 0.004562045), (0.6, 0.004810444), (0.62, 0.005025779), 
+    (0.65, 0.005238934), (0.66, 0.005313537), (0.68, 0.005689467), (0.71, 
+    0.006148964), (0.75, 0.006885567), (0.77, 0.007538725), (0.79, 
+    0.008123696), (0.83, 0.008809673), (0.85, 0.009601507), (0.87, 
+    0.010230565), (0.88, 0.010842062), (0.89, 0.011515206), (0.9, 0.012267559), 
+    (0.91, 0.013143082), (0.92, 0.014423487), (0.93, 0.015600462), (0.94, 
+    0.016412281), (0.95, 0.017567212)))
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.ConcreteTensionDamage(
+    table=((4.14, 0.0), (3.38, 0.000166158), (2.59, 0.000392643), (2.22, 
+    0.000504734), (1.86, 0.000616825), (1.25, 0.000937379), (0.83, 0.00115114), 
+    (0.57, 0.005159815)))
+mdb.models['Model-1'].HomogeneousSolidSection(material='Concrete', name=
+    'Concrete', thickness=None)
+mdb.models['Model-1'].parts['Compression-Cylinder'].Set(cells=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].cells.getSequenceFromMask(
+    ('[#ff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['Compression-Cylinder'].SectionAssignment(offset=
+    0.0, offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].sets['Set-1'], 
+    sectionName='Concrete', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'Compression-Cylinder-1', part=
+    mdb.models['Model-1'].parts['Compression-Cylinder'])
+mdb.models['Model-1'].ExplicitDynamicsStep(improvedDtMethod=ON, name=
+    'Loading-Step', previous='Initial', timePeriod=10.0)
+# Save by Mohd Babar Malik on 2024_09_09-10.23.08; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.2, variables=('S', 'SVAVG', 'PE', 'PEVAVG', 'PEEQ', 'PEEQVAVG', 'LE', 
+    'U', 'RF', 'DAMAGEC', 'DAMAGET', 'DAMAGESHR', 'STATUS'))
+# Save by Mohd Babar Malik on 2024_09_09-10.26.29; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.rotate(angle=90.0, axisDirection=(75.0, 0.0, 
+    0.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('Compression-Cylinder-1', ))
+mdb.models['Model-1'].rootAssembly.rotate(angle=180.0, axisDirection=(0.0, 0.0, 
+    75.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('Compression-Cylinder-1', 
+    ))
+# Save by Mohd Babar Malik on 2024_09_09-10.28.36; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-1'].rootAssembly.instances['Compression-Cylinder-1'].vertices[10])
+del mdb.models['Model-1'].rootAssembly.features['RP-1']
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-1'].rootAssembly.instances['Compression-Cylinder-1'].vertices[9])
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-1'].rootAssembly.instances['Compression-Cylinder-1'].vertices[10])
+mdb.models['Model-1'].rootAssembly.features.changeKey(fromName='RP-1', toName=
+    'RP-base')
+mdb.models['Model-1'].rootAssembly.features.changeKey(fromName='RP-2', toName=
+    'RP-Top')
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Compression-Cylinder-1'].faces.getSequenceFromMask(
+    ('[#4488000 ]', ), ), name='t_Set-1')
+mdb.models['Model-1'].RigidBody(name='Constraint-Top', refPointRegion=Region(
+    referencePoints=(mdb.models['Model-1'].rootAssembly.referencePoints[6], )), 
+    tieRegion=mdb.models['Model-1'].rootAssembly.sets['t_Set-1'])
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Compression-Cylinder-1'].faces.getSequenceFromMask(
+    ('[#8860000 ]', ), ), name='t_Set-3')
+mdb.models['Model-1'].RigidBody(name='Constraint-Base', refPointRegion=Region(
+    referencePoints=(mdb.models['Model-1'].rootAssembly.referencePoints[5], )), 
+    tieRegion=mdb.models['Model-1'].rootAssembly.sets['t_Set-3'])
+# Save by Mohd Babar Malik on 2024_09_09-10.31.48; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.Set(name='Set-5', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.referencePoints[5], ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Loading-Step', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=None, name='Base-Fixation', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-5'], u1=0.0, u2=0.0, u3=0.0, 
+    ur1=0.0, ur2=0.0, ur3=0.0)
+# Save by Mohd Babar Malik on 2024_09_09-10.33.12; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].SmoothStepAmplitude(data=((0.0, 0.0), (10.0, 1.0)), name=
+    'Ramp-Amp', timeSpan=STEP)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-6', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.referencePoints[6], ))
+mdb.models['Model-1'].DisplacementBC(amplitude='Ramp-Amp', createStepName=
+    'Loading-Step', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=None, name='Top-Dis', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-6'], u1=0.0, u2=-5.0, u3=0.0, 
+    ur1=0.0, ur2=0.0, ur3=0.0)
+mdb.models['Model-1'].boundaryConditions['Base-Fixation'].move('Loading-Step', 
+    'Initial')
+# Save by Mohd Babar Malik on 2024_09_09-10.36.43; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['Compression-Cylinder'].seedPart(deviationFactor=
+    0.1, minSizeFactor=0.1, size=15.0)
+mdb.models['Model-1'].parts['Compression-Cylinder'].setElementType(elemTypes=(
+    ElemType(elemCode=C3D8R, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT, elemDeletion=ON), ElemType(elemCode=C3D6, 
+    elemLibrary=EXPLICIT), ElemType(elemCode=C3D4, elemLibrary=EXPLICIT)), 
+    regions=(
+    mdb.models['Model-1'].parts['Compression-Cylinder'].cells.getSequenceFromMask(
+    ('[#ff ]', ), ), ))
+mdb.models['Model-1'].parts['Compression-Cylinder'].setMeshControls(algorithm=
+    ADVANCING_FRONT, allowMapped=False, regions=
+    mdb.models['Model-1'].parts['Compression-Cylinder'].cells.getSequenceFromMask(
+    ('[#ff ]', ), ), technique=SWEEP)
+mdb.models['Model-1'].parts['Compression-Cylinder'].generateMesh()
+# Save by Mohd Babar Malik on 2024_09_09-10.40.25; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(38, 
+    '\n*Concrete Compression Hardening\n 36.4,  0\n 38.4, 0.000262874\n 40.1, 0.000364617\n 40.9, 0.000481495\n 41.4, 0.000651055\n  41.,  0.00082255\n 39.8,  0.00108839\n 37.9,  0.00134744\n 35.4,  0.00169648\n 33.6,  0.00195335\n 31.3,  0.00229366\n 28.7,  0.00271089\n 26.2,  0.00315233\n 23.4,  0.00357391\n 21.5,  0.00390333\n 19.8,  0.00415802\n  18.,  0.00440169\n 17.2,  0.00456204\n 16.4,  0.00481044\n 15.5,  0.00502578\n 14.7,  0.00523893\n  14.,  0.00531354\n 13.1,  0.00568947\n 11.9,  0.00614896\n 10.4,  0.00688557\n  9.5,  0.00753872\n  8.6,   0.0081237\n   7.,  0.00880967\n  6.2,  0.00960151\n  5.5,   0.0102306\n   5.,   0.0108421\n  4.6,   0.0115152\n  4.2,   0.0122676\n  3.7,   0.0131431\n  3.3,   0.0144235\n  2.9,   0.0156005\n  2.7,   0.0164123\n  2.1,   0.0175672')
+mdb.models['Model-1'].keywordBlock.replace(40, 
+    '\n*Concrete Compression Damage\n   0., 0\n   0., 0.000262874\n   0., 0.000364617\n   0., 0.000481495\n   0., 0.000651055\n 0.01,  0.00082255\n 0.04,  0.00108839\n 0.08,  0.00134744\n 0.15,  0.00169648\n 0.19,  0.00195335\n 0.24,  0.00229366\n 0.31,  0.00271089\n 0.37,  0.00315233\n 0.43,  0.00357391\n 0.48,  0.00390333\n 0.52,  0.00415802\n 0.56,  0.00440169\n 0.59,  0.00456204\n  0.6,  0.00481044\n 0.62,  0.00502578\n 0.65,  0.00523893\n 0.66,  0.00531354\n 0.68,  0.00568947\n 0.71,  0.00614896\n 0.75,  0.00688557\n 0.77,  0.00753872\n 0.79,   0.0081237\n 0.83,  0.00880967\n 0.85,  0.00960151\n 0.87,   0.0102306\n 0.88,   0.0108421\n 0.89,   0.0115152\n  0.9,   0.0122676\n 0.91,   0.0131431\n 0.92,   0.0144235\n 0.93,   0.0156005\n 0.94,   0.0164123\n 0.95,   0.0175672')
+mdb.models['Model-1'].keywordBlock.replace(41, 
+    '\n*Concrete Tension Damage\n 4.14,          0.\n 3.38, 0.000166158\n 2.59, 0.000392643\n 2.22, 0.000504734\n 1.86, 0.000616825\n 1.25, 0.000937379\n 0.83,  0.00115114\n 0.57,  0.00515981\n*Concrete Failure, TYPE=Strain\n0.00515981,   0.0175672,   0.57,  0.95')
+# Save by Mohd Babar Malik on 2024_09_09-10.50.23; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
+    description='', echoPrint=OFF, explicitPrecision=DOUBLE_PLUS_PACK, 
+    historyPrint=OFF, memory=90, memoryUnits=PERCENTAGE, model='Model-1', 
+    modelPrint=OFF, multiprocessingMode=DEFAULT, name='Job-Cylider-Compression'
+    , nodalOutputPrecision=SINGLE, numCpus=4, numDomains=4, 
+    parallelizationMethodExplicit=DOMAIN, queue=None, resultsFormat=ODB, 
+    scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['Job-Cylider-Compression'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-Cylider-Compression']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'IN THE OPTION *CONCRETE TENSION DAMAGE, THE DAMAGE AT INITIAL FAILURE MUST BE ZERO', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'IN THE OPTION *CONCRETE TENSION DAMAGE, VALUES OF THE DAMAGE VARIABLE dt MUST BE IN THE RANGE (0,1).', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'DURING THE CONVERSION FROM CRACKING TO PLASTIC STRAIN Abaqus FOUND NEGATIVE AND/OR DECREASING VALUES OF PLASTIC STRAIN FOR MATERIAL CONCRETE. VERIFY THAT THE DEGRADATION DATA UNDER *CONCRETE TENSION DAMAGE IS CORRECT', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'DURING THE CONVERSION FROM CRACKING TO PLASTIC STRAIN Abaqus FOUND NEGATIVE AND/OR DECREASING VALUES OF PLASTIC STRAIN FOR MATERIAL CONCRETE. VERIFY THAT THE DEGRADATION DATA UNDER *CONCRETE TENSION DAMAGE IS CORRECT', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Cylinder-Compression\\Job-Cylider-Compression.odb', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-Cylider-Compression']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'IN THE OPTION *CONCRETE TENSION DAMAGE, THE DAMAGE AT INITIAL FAILURE MUST BE ZERO', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'IN THE OPTION *CONCRETE TENSION DAMAGE, VALUES OF THE DAMAGE VARIABLE dt MUST BE IN THE RANGE (0,1).', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'DURING THE CONVERSION FROM CRACKING TO PLASTIC STRAIN Abaqus FOUND NEGATIVE AND/OR DECREASING VALUES OF PLASTIC STRAIN FOR MATERIAL CONCRETE. VERIFY THAT THE DEGRADATION DATA UNDER *CONCRETE TENSION DAMAGE IS CORRECT', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'DURING THE CONVERSION FROM CRACKING TO PLASTIC STRAIN Abaqus FOUND NEGATIVE AND/OR DECREASING VALUES OF PLASTIC STRAIN FOR MATERIAL CONCRETE. VERIFY THAT THE DEGRADATION DATA UNDER *CONCRETE TENSION DAMAGE IS CORRECT', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Cylinder-Compression\\Job-Cylider-Compression.odb', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-Cylider-Compression'})
+mdb.jobs['Job-Cylider-Compression']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-Cylider-Compression'})
+# Save by Mohd Babar Malik on 2024_09_09-10.59.07; build 2020 2019_09_13-23.19.31 163176
