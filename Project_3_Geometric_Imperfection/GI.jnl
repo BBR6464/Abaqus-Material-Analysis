@@ -1,0 +1,286 @@
+# Save by Mohd Babar Malik on 2024_09_09-11.55.10; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models.changeKey(fromName='Model-1', toName='Model-Main')
+# Save by Mohd Babar Malik on 2024_09_09-11.55.20; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-Main'].ConstrainedSketch(name='__profile__', sheetSize=200.0)
+mdb.models['Model-Main'].sketches['__profile__'].rectangle(point1=(-75.0, 
+    100.0), point2=(75.0, 115.0))
+del mdb.models['Model-Main'].sketches['__profile__']
+mdb.models['Model-Main'].ConstrainedSketch(name='__profile__', sheetSize=200.0)
+mdb.models['Model-Main'].sketches['__profile__'].rectangle(point1=(-75.0, 
+    100.0), point2=(75.0, 115.0))
+mdb.models['Model-Main'].sketches['__profile__'].rectangle(point1=(-75.0, 
+    -100.0), point2=(75.0, -115.0))
+mdb.models['Model-Main'].sketches['__profile__'].rectangle(point1=(-5.0, 
+    -100.0), point2=(5.0, 100.0))
+mdb.models['Model-Main'].sketches['__profile__'].autoTrimCurve(curve1=
+    mdb.models['Model-Main'].sketches['__profile__'].geometry[9], point1=(
+    -1.02780532836914, -100.257476806641))
+mdb.models['Model-Main'].sketches['__profile__'].autoTrimCurve(curve1=
+    mdb.models['Model-Main'].sketches['__profile__'].geometry[13], point1=(
+    -0.0876808166503906, -99.5515747070313))
+mdb.models['Model-Main'].sketches['__profile__'].autoTrimCurve(curve1=
+    mdb.models['Model-Main'].sketches['__profile__'].geometry[5], point1=(
+    -0.621849060058594, 100.229095458984))
+mdb.models['Model-Main'].sketches['__profile__'].autoTrimCurve(curve1=
+    mdb.models['Model-Main'].sketches['__profile__'].geometry[11], point1=(
+    -0.775169372558594, 100.014465332031))
+mdb.models['Model-Main'].Part(dimensionality=THREE_D, name='Beam', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-Main'].parts['Beam'].BaseSolidExtrude(depth=2000.0, sketch=
+    mdb.models['Model-Main'].sketches['__profile__'])
+del mdb.models['Model-Main'].sketches['__profile__']
+# Save by Mohd Babar Malik on 2024_09_09-11.59.33; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-Main'].Material(name='Steel')
+mdb.models['Model-Main'].materials['Steel'].Elastic(table=((200000.0, 0.3), ))
+mdb.models['Model-Main'].HomogeneousSolidSection(material='Steel', name=
+    'Section-Beam', thickness=None)
+mdb.models['Model-Main'].parts['Beam'].Set(cells=
+    mdb.models['Model-Main'].parts['Beam'].cells.getSequenceFromMask(('[#1 ]', 
+    ), ), name='Set-1')
+mdb.models['Model-Main'].parts['Beam'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-Main'].parts['Beam'].sets['Set-1'], sectionName=
+    'Section-Beam', thicknessAssignment=FROM_SECTION)
+del mdb.models['Model-Main'].materials['Steel']
+del mdb.models['Model-Main'].sections['Section-Beam']
+del mdb.models['Model-Main'].parts['Beam'].sectionAssignments[0]
+mdb.models['Model-Main'].parts['Beam'].PartitionCellByPlaneThreePoints(cells=
+    mdb.models['Model-Main'].parts['Beam'].cells.getSequenceFromMask(('[#1 ]', 
+    ), ), point1=mdb.models['Model-Main'].parts['Beam'].vertices[20], point2=
+    mdb.models['Model-Main'].parts['Beam'].vertices[10], point3=
+    mdb.models['Model-Main'].parts['Beam'].InterestingPoint(
+    mdb.models['Model-Main'].parts['Beam'].edges[14], MIDDLE))
+mdb.models['Model-Main'].parts['Beam'].PartitionCellByPlaneThreePoints(cells=
+    mdb.models['Model-Main'].parts['Beam'].cells.getSequenceFromMask(('[#2 ]', 
+    ), ), point1=mdb.models['Model-Main'].parts['Beam'].vertices[23], point2=
+    mdb.models['Model-Main'].parts['Beam'].vertices[18], point3=
+    mdb.models['Model-Main'].parts['Beam'].InterestingPoint(
+    mdb.models['Model-Main'].parts['Beam'].edges[24], MIDDLE))
+mdb.models['Model-Main'].Material(name='Steel')
+mdb.models['Model-Main'].materials['Steel'].Elastic(table=((200000.0, 0.3), ))
+mdb.models['Model-Main'].HomogeneousSolidSection(material='Steel', name=
+    'Section-Beam', thickness=None)
+mdb.models['Model-Main'].parts['Beam'].Set(cells=
+    mdb.models['Model-Main'].parts['Beam'].cells.getSequenceFromMask(('[#7 ]', 
+    ), ), name='Set-2')
+mdb.models['Model-Main'].parts['Beam'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-Main'].parts['Beam'].sets['Set-2'], sectionName=
+    'Section-Beam', thicknessAssignment=FROM_SECTION)
+# Save by Mohd Babar Malik on 2024_09_09-12.04.29; build 2020 2019_09_13-23.19.31 163176
+# Save by Mohd Babar Malik on 2024_09_09-12.04.31; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-Main'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-Main'].rootAssembly.Instance(dependent=ON, name='Beam-1', 
+    part=mdb.models['Model-Main'].parts['Beam'])
+mdb.models['Model-Main'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-Main'].rootAssembly.datums[1].origin)
+mdb.models['Model-Main'].rootAssembly.ReferencePoint(point=(0.0, 0.0, 2000.0))
+mdb.models['Model-Main'].rootAssembly.Set(faces=
+    mdb.models['Model-Main'].rootAssembly.instances['Beam-1'].faces.getSequenceFromMask(
+    ('[#80022 ]', ), ), name='t_Set-1')
+mdb.models['Model-Main'].RigidBody(name='Constraint-Fixable', refPointRegion=
+    Region(referencePoints=(
+    mdb.models['Model-Main'].rootAssembly.referencePoints[4], )), tieRegion=
+    mdb.models['Model-Main'].rootAssembly.sets['t_Set-1'])
+mdb.models['Model-Main'].rootAssembly.features.changeKey(fromName='RP-1', 
+    toName='RP-Fixeble')
+mdb.models['Model-Main'].rootAssembly.features.changeKey(fromName='RP-2', 
+    toName='RP-Free')
+mdb.models['Model-Main'].rootAssembly.Set(faces=
+    mdb.models['Model-Main'].rootAssembly.instances['Beam-1'].faces.getSequenceFromMask(
+    ('[#40014 ]', ), ), name='p_Set-3')
+mdb.models['Model-Main'].RigidBody(name='Constraint-Free', pinRegion=
+    mdb.models['Model-Main'].rootAssembly.sets['p_Set-3'], refPointRegion=
+    Region(referencePoints=(
+    mdb.models['Model-Main'].rootAssembly.referencePoints[5], )))
+mdb.models['Model-Main'].rootAssembly.Set(name='Set-5', referencePoints=(
+    mdb.models['Model-Main'].rootAssembly.referencePoints[4], ))
+mdb.models['Model-Main'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, fieldName='', localCsys=None, name=
+    'BC-fixed', region=mdb.models['Model-Main'].rootAssembly.sets['Set-5'], u1=
+    SET, u2=SET, u3=SET, ur1=SET, ur2=SET, ur3=SET)
+mdb.models['Model-Main'].BuckleStep(maxIterations=300, name='Step-Buklig', 
+    numEigen=5, previous='Initial', vectors=100)
+mdb.models['Model-Main'].rootAssembly.Set(name='Set-6', referencePoints=(
+    mdb.models['Model-Main'].rootAssembly.referencePoints[5], ))
+mdb.models['Model-Main'].DisplacementBC(amplitude=UNSET, buckleCase=
+    PERTURBATION_AND_BUCKLING, createStepName='Step-Buklig', distributionType=
+    UNIFORM, fieldName='', fixed=OFF, localCsys=None, name='BC-Load', region=
+    mdb.models['Model-Main'].rootAssembly.sets['Set-6'], u1=0.0, u2=1.0, u3=0.0
+    , ur1=0.0, ur2=0.0, ur3=0.0)
+mdb.models['Model-Main'].parts['Beam'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=15.0)
+mdb.models['Model-Main'].parts['Beam'].setElementType(elemTypes=(ElemType(
+    elemCode=C3D8R, elemLibrary=STANDARD, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6, elemLibrary=STANDARD), 
+    ElemType(elemCode=C3D4, elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-Main'].parts['Beam'].cells.getSequenceFromMask(('[#7 ]', 
+    ), ), ))
+mdb.models['Model-Main'].parts['Beam'].generateMesh()
+mdb.models['Model-Main'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-Main', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-Bulkig', nodalOutputPrecision=SINGLE
+    , numCpus=1, numGPUs=0, queue=None, resultsFormat=ODB, scratch='', type=
+    ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['Job-Bulkig'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-Bulkig']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\Abaqus Projects\\Project_3_Geometric_Imperfection\\Job-Bulkig.odb', 
+    'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'BBR', 'handle': 51012, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-Bulkig', 'memory': 266.0})
+mdb.jobs['Job-Bulkig']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MINIMUM_MEMORY, {'minimum_memory': 94.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-Bulkig', 'memory': 269.0})
+mdb.jobs['Job-Bulkig']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MINIMUM_MEMORY, {'minimum_memory': 94.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(STATUS, {'totalTime': 0.0, 'attempts': 1, 
+    'timeIncrement': 1e-36, 'increment': 1, 'stepTime': 1e-36, 'step': 1, 
+    'jobName': 'Job-Bulkig', 'severe': 0, 'iterations': 0, 
+    'phase': STANDARD_PHASE, 'equilibrium': 0})
+mdb.jobs['Job-Bulkig']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(JOB_COMPLETED, {
+    'time': 'Mon Sep  9 14:24:29 2024', 'jobName': 'Job-Bulkig'})
+# Save by Mohd Babar Malik on 2024_09_09-14.27.16; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Job-Bulkig'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-Bulkig']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Geometric Imperfection\\Job-Bulkig.odb', 
+    'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'BBR', 'handle': 14476, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-Bulkig', 'memory': 266.0})
+mdb.jobs['Job-Bulkig']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MINIMUM_MEMORY, {'minimum_memory': 94.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-Bulkig', 'memory': 269.0})
+mdb.jobs['Job-Bulkig']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(MINIMUM_MEMORY, {'minimum_memory': 94.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(STATUS, {'totalTime': 0.0, 'attempts': 1, 
+    'timeIncrement': 1e-36, 'increment': 1, 'stepTime': 1e-36, 'step': 1, 
+    'jobName': 'Job-Bulkig', 'severe': 0, 'iterations': 0, 
+    'phase': STANDARD_PHASE, 'equilibrium': 0})
+mdb.jobs['Job-Bulkig']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-Bulkig'})
+mdb.jobs['Job-Bulkig']._Message(JOB_COMPLETED, {
+    'time': 'Mon Sep  9 17:22:15 2024', 'jobName': 'Job-Bulkig'})
+# Save by Mohd Babar Malik on 2024_09_09-21.31.40; build 2020 2019_09_13-23.19.31 163176
