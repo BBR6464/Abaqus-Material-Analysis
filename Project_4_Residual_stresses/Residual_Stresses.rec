@@ -1,0 +1,267 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:7 #fc000000 #ffffffff:15 #3fff ]', ), ), name='Set-Centre')
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:23 #ffffc000 #ffffffff:2 #efffffff #ffffffff:4 #ff ]', ), ), 
+    name='Set-Left')
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#ffffffff:7 #3ffffff ]', ), ), name='Set-Right')
+mdb.models['Model-1'].Stress(distributionType=UNIFORM, name='PS_Left', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Left'], sigma11=0.0, sigma12=
+    0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=100.0)
+mdb.models['Model-1'].PredefinedField(name='PS_Right', objectToCopy=
+    mdb.models['Model-1'].predefinedFields['PS_Left'], toStepName='Initial')
+mdb.models['Model-1'].predefinedFields['PS_Right'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Right'], sigma11=0.0, sigma12=
+    0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=100.0)
+mdb.models['Model-1'].PredefinedField(name='PS_Center', objectToCopy=
+    mdb.models['Model-1'].predefinedFields['PS_Right'], toStepName='Initial')
+mdb.models['Model-1'].predefinedFields['PS_Center'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Centre'], sigma11=0.0, 
+    sigma12=0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=-100.0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NO MEMBERS AND WILL BE IGNORED.  NODES DEFINED IN THIS SET MAY HAVE BEEN DELETED BECAUSE THEY WERE NOT CONNECTED TO ANY ELEMENTS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+del mdb.models['Model-1'].rootAssembly.sets['Set-Centre']
+del mdb.models['Model-1'].rootAssembly.sets['Set-Left']
+del mdb.models['Model-1'].rootAssembly.sets['Set-Right']
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:23 #7c000 #0:3 #f800 ]', ), ), name='Set-Left')
+mdb.models['Model-1'].rootAssembly.Set(name='Set-Right', objectToCopy=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Left'])
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#1f #0:2 #e0000000 #3 ]', ), ), name='Set-Right')
+mdb.models['Model-1'].rootAssembly.deleteSets(setNames=('Set-Left', 
+    'Set-Right'))
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:23 #ffffc000 #ffffffff:7 #ff ]', ), ), name='Set-Left')
+mdb.models['Model-1'].rootAssembly.Set(name='Set-Right', objectToCopy=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Left'])
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#ffffffff:7 #3ffffff ]', ), ), name='Set-Right')
+mdb.models['Model-1'].rootAssembly.Set(name='Set-Center', objectToCopy=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Right'])
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:7 #fc000000 #ffffffff:15 #3fff ]', ), ), name='Set-Center')
+del mdb.models['Model-1'].predefinedFields['PS_Center']
+del mdb.models['Model-1'].predefinedFields['PS_Left']
+del mdb.models['Model-1'].predefinedFields['PS_Right']
+mdb.models['Model-1'].Stress(distributionType=UNIFORM, name='RS_Left', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Left'], sigma11=0.0, sigma12=
+    0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=100.0)
+mdb.models['Model-1'].PredefinedField(name='RS_Right', objectToCopy=
+    mdb.models['Model-1'].predefinedFields['RS_Left'], toStepName='Initial')
+mdb.models['Model-1'].predefinedFields['RS_Right'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Right'], sigma11=0.0, sigma12=
+    0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=100.0)
+mdb.models['Model-1'].PredefinedField(name='RS_Center', objectToCopy=
+    mdb.models['Model-1'].predefinedFields['RS_Right'], toStepName='Initial')
+mdb.models['Model-1'].predefinedFields['RS_Center'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Center'], sigma11=0.0, 
+    sigma12=0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=-100.0)
+del mdb.jobs['Job-1']
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=4, numDomains=4, numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    '', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NO MEMBERS AND WILL BE IGNORED.  NODES DEFINED IN THIS SET MAY HAVE BEEN DELETED BECAUSE THEY WERE NOT CONNECTED TO ANY ELEMENTS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+del mdb.models['Model-1'].boundaryConditions['BC-Fixed']
+del mdb.models['Model-1'].rootAssembly.features['Fixed']
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#20 ]', ), ), name='Set-4')
+mdb.models['Model-1'].EncastreBC(createStepName='Initial', localCsys=None, 
+    name='BC-Fixed', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'])
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'BBR', 'handle': 8156, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 41.0})
+mdb.jobs['Job-1']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MINIMUM_MEMORY, {'minimum_memory': 23.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.1, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 1, 'stepTime': 0.1, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 2, 'phase': STANDARD_PHASE, 
+    'equilibrium': 2})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.2, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 2, 'stepTime': 0.2, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.3, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 3, 'stepTime': 0.3, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.4, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 4, 'stepTime': 0.4, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.5, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 5, 'stepTime': 0.5, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.6, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 6, 'stepTime': 0.6, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.7, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 7, 'stepTime': 0.7, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 7, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.8, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 8, 'stepTime': 0.8, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 8, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.9, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 9, 'stepTime': 0.9, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 9, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 10, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 0.1, 'increment': 10, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Wed Sep 11 11:31:41 2024', 
+    'jobName': 'Job-1'})

@@ -1,0 +1,307 @@
+# Save by Mohd Babar Malik on 2024_09_11-10.24.21; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=200.0)
+mdb.models['Model-1'].sketches['__profile__'].rectangle(point1=(-50.0, -50.0), 
+    point2=(50.0, 50.0))
+mdb.models['Model-1'].Part(dimensionality=THREE_D, name='Part-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Part-1'].BaseSolidExtrude(depth=500.0, sketch=
+    mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].Material(name='Steel')
+mdb.models['Model-1'].materials['Steel'].Elastic(table=((20000.0, 0.2), ))
+mdb.models['Model-1'].HomogeneousSolidSection(material='Steel', name=
+    'Section-1', thickness=None)
+mdb.models['Model-1'].parts['Part-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=Region(
+    cells=mdb.models['Model-1'].parts['Part-1'].cells.getSequenceFromMask(
+    mask=('[#1 ]', ), )), sectionName='Section-1', thicknessAssignment=
+    FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='Part-1-1', 
+    part=mdb.models['Model-1'].parts['Part-1'])
+mdb.models['Model-1'].StaticStep(initialInc=0.1, maxInc=0.1, maxNumInc=100000, 
+    minInc=1e-15, name='Step-1', nlgeom=ON, previous='Initial')
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-1'].rootAssembly.datums[1].origin)
+mdb.models['Model-1'].rootAssembly.features.changeKey(fromName='RP-1', toName=
+    'Fixed')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Initial', 
+    distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-Fixed', 
+    region=Region(referencePoints=(
+    mdb.models['Model-1'].rootAssembly.referencePoints[4], )), u1=SET, u2=SET, 
+    u3=SET, ur1=SET, ur2=SET, ur3=SET)
+mdb.models['Model-1'].parts['Part-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=15.0)
+mdb.models['Model-1'].parts['Part-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=20.0)
+mdb.models['Model-1'].parts['Part-1'].seedEdgeByNumber(constraint=FIXED, edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.getSequenceFromMask(('[#c50 ]', 
+    ), ), number=8)
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:23 #ffffc000 #ffffffff #0:2 #fffff800 #ffffffff:3 #ff ]', ), ), 
+    name='Set-Left')
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#ffffffff:3 #e000000f #3fffff ]', ), ), name='Set-Right')
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:7 #ffe00000 #ffffffff:15 #3fff #0 #fffffc00 #ffffffff', 
+    ' #7ff ]', ), ), name='Set-Centre')
+mdb.models['Model-1'].Stress(distributionType=UNIFORM, name='RS-Left', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Left'], sigma11=0.0, sigma12=
+    0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=100.0)
+mdb.models['Model-1'].PredefinedField(name='RS-Right', objectToCopy=
+    mdb.models['Model-1'].predefinedFields['RS-Left'], toStepName='Initial')
+mdb.models['Model-1'].predefinedFields['RS-Right'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Right'], sigma11=0.0, sigma12=
+    0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=100.0)
+mdb.models['Model-1'].PredefinedField(name='RS-Center', objectToCopy=
+    mdb.models['Model-1'].predefinedFields['RS-Right'], toStepName='Initial')
+mdb.models['Model-1'].predefinedFields['RS-Center'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Centre'], sigma11=0.0, 
+    sigma12=0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=-100.0)
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:3 #e0000000 #3fffff #0:2 #fc000000 #ffffffff:15 #3fff ]', ), ), 
+    name='Set-Centre')
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=4, numDomains=4, numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    '', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 126 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 127 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 128 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 129 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 130 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 131 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 132 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 133 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 134 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE INITIAL CONDITIONS OF TYPE STRESS WERE NOT UNIQUELY DEFINED FOR ELEMENT 135 INSTANCE PART-1-1. THE LAST DEFINITION WILL BE USED. THIS MESSAGE WILL NOT BE REPEATED FOR SUBSEQUENT ELEMENTS WITH DUPLICATE INITIAL CONDITIONS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'Duplicate initial conditions were specified on 25 element(s). The elements have been identified in element set WarnElemDuplicateInitCond.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NO MEMBERS AND WILL BE IGNORED.  NODES DEFINED IN THIS SET MAY HAVE BEEN DELETED BECAUSE THEY WERE NOT CONNECTED TO ANY ELEMENTS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].rootAssembly.Set(elements=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].elements.getSequenceFromMask(
+    mask=('[#0:7 #fc000000 #ffffffff:15 #3fff ]', ), ), name='Set-Centre')
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NO MEMBERS AND WILL BE IGNORED.  NODES DEFINED IN THIS SET MAY HAVE BEEN DELETED BECAUSE THEY WERE NOT CONNECTED TO ANY ELEMENTS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].predefinedFields['RS-Center'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-Centre'], sigma11=0.0, 
+    sigma12=0.0, sigma13=0.0, sigma22=0.0, sigma23=0.0, sigma33=-100.0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NO MEMBERS AND WILL BE IGNORED.  NODES DEFINED IN THIS SET MAY HAVE BEEN DELETED BECAUSE THEY WERE NOT CONNECTED TO ANY ELEMENTS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+del mdb.models['Model-1'].predefinedFields['RS-Center']
+del mdb.models['Model-1'].predefinedFields['RS-Left']
+del mdb.models['Model-1'].predefinedFields['RS-Right']
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NO MEMBERS AND WILL BE IGNORED.  NODES DEFINED IN THIS SET MAY HAVE BEEN DELETED BECAUSE THEY WERE NOT CONNECTED TO ANY ELEMENTS.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'A BOUNDARY CONDITION HAS BEEN SPECIFIED ON NODE SET ASSEMBLY__PICKEDSET5 BUT THIS NODE SET IS NOT ACTIVE IN THE MODEL', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'NODE SET ASSEMBLY__PICKEDSET5 HAS NOT BEEN DEFINED', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_4_Residual_Stresses\\Job-1.odb', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+# Save by Mohd Babar Malik on 2024_09_11-11.07.09; build 2020 2019_09_13-23.19.31 163176
