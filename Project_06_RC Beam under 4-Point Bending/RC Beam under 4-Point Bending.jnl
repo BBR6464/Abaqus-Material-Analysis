@@ -1,0 +1,6 @@
+# Save by Mohd Babar Malik on 2024_09_12-14.08.09; build 2020 2019_09_13-23.19.31 163176
+from abaqus import *
+upgradeMdb(
+    'C:/Users/Mohd Babar Malik/Downloads/RC Beam 3-Point Bending-2019-2019.cae'
+    , 'C:/Users/Mohd Babar Malik/Downloads/RC Beam 3-Point Bending-2019.cae')
+# Save by Mohd Babar Malik on 2024_09_12-14.08.09; build 2020 2019_09_13-23.19.31 163176
