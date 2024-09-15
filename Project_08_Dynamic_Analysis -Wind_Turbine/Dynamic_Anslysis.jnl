@@ -1,0 +1,33 @@
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ModalDynamicsStep(directDamping=((1, 1, 0.03), ), 
+    incSize=0.005, name='Modal_dyamic_step', previous='Frequency_Step', 
+    timePeriod=31.14)
+# Save by Mohd Babar Malik on 2024_09_14-17.37.10; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.engineeringFeatures.inertias['Cell mass'].setValues(
+    mass=0.0, mass3=80.0)
+# Save by Mohd Babar Malik on 2024_09_14-22.18.05; build 2020 2019_09_13-23.19.31 163176
