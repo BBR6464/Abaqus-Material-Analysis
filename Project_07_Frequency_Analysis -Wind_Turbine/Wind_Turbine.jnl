@@ -1,0 +1,152 @@
+# Save by Mohd Babar Malik on 2024_09_14-12.57.22; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=4000.0)
+mdb.models['Model-1'].sketches['__profile__'].CircleByCenterPerimeter(center=(
+    0.0, 0.0), point1=(2000.0, 0.0))
+mdb.models['Model-1'].Part(dimensionality=THREE_D, name='Part-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Part-1'].BaseShellExtrude(depth=50000.0, 
+    draftAngle=-1.1458, sketch=mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].Material(name='Steel')
+mdb.models['Model-1'].materials['Steel'].Density(table=((7.85e-09, ), ))
+mdb.models['Model-1'].materials['Steel'].Elastic(table=((200000.0, 0.3), ))
+mdb.models['Model-1'].HomogeneousShellSection(idealization=NO_IDEALIZATION, 
+    integrationRule=SIMPSON, material='Steel', name='Tower Sectio', 
+    nodalThicknessField='', numIntPts=5, poissonDefinition=DEFAULT, 
+    preIntegrate=OFF, temperature=GRADIENT, thickness=30.0, thicknessField='', 
+    thicknessModulus=None, thicknessType=UNIFORM, useDensity=OFF)
+mdb.models['Model-1'].parts['Part-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=BOTTOM_SURFACE, region=Region(
+    faces=mdb.models['Model-1'].parts['Part-1'].faces.getSequenceFromMask(
+    mask=('[#1 ]', ), )), sectionName='Tower Sectio', thicknessAssignment=
+    FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='Part-1-1', 
+    part=mdb.models['Model-1'].parts['Part-1'])
+mdb.models['Model-1'].rootAssembly.rotate(angle=90.0, axisDirection=(-4000.0, 
+    0.0, 0.0), axisPoint=(2000.0, 0.0, 0.0), instanceList=('Part-1-1', ))
+mdb.models['Model-1'].FrequencyStep(name='Frequency_Step', numEigen=5, 
+    previous='Initial')
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].InterestingPoint(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges[0], CENTER))
+mdb.models['Model-1'].RigidBody(name='Constraint-Top of Tower', refPointRegion=
+    Region(referencePoints=(
+    mdb.models['Model-1'].rootAssembly.referencePoints[4], )), tieRegion=
+    Region(
+    edges=mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    mask=('[#1 ]', ), )))
+mdb.models['Model-1'].rootAssembly.features.changeKey(fromName='RP-1', toName=
+    'Lumped mass')
+mdb.models['Model-1'].rootAssembly.engineeringFeatures.PointMassInertia(alpha=
+    0.0, composite=0.0, mass=80.0, name='Cell mass', region=Region(
+    referencePoints=(mdb.models['Model-1'].rootAssembly.referencePoints[4], )))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Frequency_Step', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=None, name='Fexed Bass', region=Region(
+    edges=mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    mask=('[#2 ]', ), )), u1=0.0, u2=0.0, u3=0.0, ur1=0.0, ur2=0.0, ur3=0.0)
+mdb.models['Model-1'].parts['Part-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=500.0)
+mdb.models['Model-1'].parts['Part-1'].setElementType(elemTypes=(ElemType(
+    elemCode=S8R, elemLibrary=STANDARD), ElemType(elemCode=STRI65, 
+    elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Part-1'].faces.getSequenceFromMask(('[#1 ]', 
+    ), ), ))
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Frequency_Analysis', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, queue=None, 
+    resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=
+    0, waitMinutes=0)
+mdb.models['Model-1'].materials['Steel'].density.setValues(table=((7.85e-12, ), 
+    ))
+# Save by Mohd Babar Malik on 2024_09_14-14.37.15; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Frequency_Analysis'].submit(consistencyChecking=OFF)
+mdb.jobs['Frequency_Analysis']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Project_07_Frequency_Analysis -Wind_Turbine\\Frequency_Analysis.odb', 
+    'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'BBR', 'handle': 18968, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'Frequency_Analysis', 'memory': 504.0})
+mdb.jobs['Frequency_Analysis']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 16260.0, 
+    'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 50.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 2, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 3, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 4, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 5, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(STATUS, {'totalTime': 0.0, 
+    'attempts': 1, 'timeIncrement': 1e-36, 'increment': 1, 'stepTime': 1e-36, 
+    'step': 1, 'jobName': 'Frequency_Analysis', 'severe': 0, 'iterations': 0, 
+    'phase': STANDARD_PHASE, 'equilibrium': 0})
+mdb.jobs['Frequency_Analysis']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Frequency_Analysis'})
+mdb.jobs['Frequency_Analysis']._Message(JOB_COMPLETED, {
+    'time': 'Sat Sep 14 17:06:16 2024', 'jobName': 'Frequency_Analysis'})
+# Save by Mohd Babar Malik on 2024_09_14-17.17.42; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].materials['Steel'].density.setValues(table=((7.85e-07, ), 
+    ))
+# Save by Mohd Babar Malik on 2024_09_14-17.23.08; build 2020 2019_09_13-23.19.31 163176
