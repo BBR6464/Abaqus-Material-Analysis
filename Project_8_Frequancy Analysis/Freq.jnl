@@ -1,0 +1,179 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=200.0)
+mdb.models['Model-1'].sketches['__profile__'].Line(point1=(0.0, 0.0), point2=(
+    47.5, 0.0))
+mdb.models['Model-1'].sketches['__profile__'].HorizontalConstraint(
+    addUndoState=False, entity=
+    mdb.models['Model-1'].sketches['__profile__'].geometry[2])
+mdb.models['Model-1'].sketches['__profile__'].ObliqueDimension(textPoint=(
+    26.5624084472656, 4.53459167480469), value=50.0, vertex1=
+    mdb.models['Model-1'].sketches['__profile__'].vertices[0], vertex2=
+    mdb.models['Model-1'].sketches['__profile__'].vertices[1])
+mdb.models['Model-1'].Part(dimensionality=TWO_D_PLANAR, name='CB', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['CB'].BaseWire(sketch=
+    mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].CircularProfile(name='Profile-Circular', r=0.5)
+mdb.models['Model-1'].Material(name='Material-1')
+mdb.models['Model-1'].materials['Material-1'].Density(table=((1.2e-06, ), ))
+mdb.models['Model-1'].materials['Material-1'].Elastic(table=((70000.0, 0.3), ))
+mdb.models['Model-1'].BeamSection(consistentMassMatrix=False, integration=
+    DURING_ANALYSIS, material='Material-1', name='Section-1', poissonRatio=0.0, 
+    profile='Profile-Circular', temperatureVar=LINEAR)
+mdb.models['Model-1'].parts['CB'].SectionAssignment(offset=0.0, offsetField='', 
+    offsetType=MIDDLE_SURFACE, region=Region(
+    edges=mdb.models['Model-1'].parts['CB'].edges.getSequenceFromMask(mask=(
+    '[#1 ]', ), )), sectionName='Section-1', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['CB'].assignBeamSectionOrientation(method=
+    N1_COSINES, n1=(0.0, 0.0, -1.0), region=Region(
+    edges=mdb.models['Model-1'].parts['CB'].edges.getSequenceFromMask(mask=(
+    '[#1 ]', ), )))
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='CB-1', part=
+    mdb.models['Model-1'].parts['CB'])
+mdb.models['Model-1'].FrequencyStep(name='Step-1', numEigen=10, previous=
+    'Initial')
+mdb.models['Model-1'].EncastreBC(createStepName='Step-1', localCsys=None, name=
+    'Fixed', region=Region(
+    vertices=mdb.models['Model-1'].rootAssembly.instances['CB-1'].vertices.getSequenceFromMask(
+    mask=('[#1 ]', ), )))
+mdb.models['Model-1'].parts['CB'].seedPart(deviationFactor=0.1, minSizeFactor=
+    0.1, size=1.0)
+mdb.models['Model-1'].parts['CB'].seedPart(deviationFactor=0.1, minSizeFactor=
+    0.1, size=0.5)
+mdb.models['Model-1'].parts['CB'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='nat_freq', nodalOutputPrecision=SINGLE, 
+    numCpus=5, numDomains=5, numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    '', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['nat_freq'].submit(consistencyChecking=OFF)
+mdb.jobs['nat_freq']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\nat_freq.odb', 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'BBR', 'handle': 10552, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'nat_freq', 'memory': 27.0})
+mdb.jobs['nat_freq']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(MINIMUM_MEMORY, {'minimum_memory': 18.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 7, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 8, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 9, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 10, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(STATUS, {'totalTime': 0.0, 'attempts': 1, 
+    'timeIncrement': 1e-36, 'increment': 1, 'stepTime': 1e-36, 'step': 1, 
+    'jobName': 'nat_freq', 'severe': 0, 'iterations': 0, 
+    'phase': STANDARD_PHASE, 'equilibrium': 0})
+mdb.jobs['nat_freq']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(JOB_COMPLETED, {
+    'time': 'Mon Apr 14 11:20:49 2025', 'jobName': 'nat_freq'})
+# Save by Mohd Babar Malik on 2025_04_14-12.12.15; build 2020 2019_09_13-23.19.31 163176
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['nat_freq'].submit(consistencyChecking=OFF)
+mdb.jobs['nat_freq']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'BBR', 'handle': 0, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\Stuff\\Frequancy Analysis\\nat_freq.odb', 
+    'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'BBR', 'handle': 23168, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'nat_freq', 'memory': 27.0})
+mdb.jobs['nat_freq']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16260.0, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(MINIMUM_MEMORY, {'minimum_memory': 18.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 7, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 8, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 9, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 10, 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(STATUS, {'totalTime': 0.0, 'attempts': 1, 
+    'timeIncrement': 1e-36, 'increment': 1, 'stepTime': 1e-36, 'step': 1, 
+    'jobName': 'nat_freq', 'severe': 0, 'iterations': 0, 
+    'phase': STANDARD_PHASE, 'equilibrium': 0})
+mdb.jobs['nat_freq']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'nat_freq'})
+mdb.jobs['nat_freq']._Message(JOB_COMPLETED, {
+    'time': 'Mon Apr 14 12:13:25 2025', 'jobName': 'nat_freq'})
+# Save by Mohd Babar Malik on 2025_04_14-12.15.52; build 2020 2019_09_13-23.19.31 163176
